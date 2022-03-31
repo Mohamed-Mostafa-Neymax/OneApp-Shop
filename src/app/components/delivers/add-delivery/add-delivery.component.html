@@ -1,0 +1,56 @@
+<section id="add-main-page">
+    <div class="card">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-body">
+                    <form [formGroup]="form">
+                        <div class="form-group">
+                            <label for="">اسم المندوب</label>
+                            <input type="text" class="form-control" formControlName="title">
+                        </div>
+                        <div class="form-group">
+                            <label for=""> الايميل</label>
+                            <input type="text" class="form-control" formControlName="title">
+                        </div>
+                        <div class="form-group">
+                            <label for=""> رقم الجوال</label>
+                            <input type="text" class="form-control" formControlName="title">
+                        </div>
+                        <div class="form-group">
+                            <label for=""> البلد</label>
+                            <input type="text" class="form-control" formControlName="title">
+                        </div>
+                        <div class="form-group">
+                            <label for=""> المدينة</label>
+                            <input type="text" class="form-control" formControlName="title">
+                        </div>
+                        <div class="form-group">
+                            <label for=""> رقم رخصة القيادة</label>
+                            <input type="text" class="form-control" formControlName="title">
+                        </div>
+                        <div class="form-group">
+                            <label for="">صورة رخصة القيادة </label>
+                            <ngx-dropzone (change)="onSelect($event)" accept="image/jpeg,image/jpg,image/png,image/gif" [multiple]="false">
+                                <ngx-dropzone-label>أضغط هنا لإختيار صورة رخصة القيادة</ngx-dropzone-label>
+                                <ngx-dropzone-image-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)" [file]="f" >
+                                    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                                </ngx-dropzone-image-preview>
+                            </ngx-dropzone>
+                        </div>
+                        <div class="form-group">
+                            <label for="">اسم البنك</label>
+                            <input type="text" class="form-control" formControlName="title">
+                        </div>
+                        <div class="form-group">
+                            <label for="">رقم الحساب البنكي</label>
+                            <input type="text" class="form-control" formControlName="title">
+                        </div>
+                        <div class="form-group text-center mt-5">
+                            <button class="btn btn-primary" type="button" (click)="submit()">إضافة المندوب</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

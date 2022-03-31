@@ -1,0 +1,40 @@
+<section id="add-main-page">
+    <div class="card">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-body">
+                    <table class="table">
+                        <thead class="thead-dark">
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">طالب الخدمة</th>
+                            <th scope="col">صورة الشخص</th>
+                            <th scope="col">اسم الخدمة</th>
+                            <th scope="col">مدةالخدمة </th>
+                            <th scope="col">سعر الخدمة </th>
+                            <th scope="col">إعدادات</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let service of services;let i=index">
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{service.name}}</td>
+                            <td>
+                              <img style="width: 50px;height: 50;border-radius: 50%;" src="{{service.avatar}}" alt="">
+                            </td>
+                            <td>{{service.title}}</td>
+                            <td>{{service.period}}</td>
+                            <td>{{service.price}}</td>
+                            <td>
+                              <!-- <mat-icon  aria-hidden="false" aria-label="Example home icon" class="text-danger" (click)="deleteApp(service.id)">delete</mat-icon>
+                              ' -->
+                              <mat-icon  aria-hidden="false" aria-label="Example home icon" class="text-success" (click)="viewApp(service)">visibility</mat-icon>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

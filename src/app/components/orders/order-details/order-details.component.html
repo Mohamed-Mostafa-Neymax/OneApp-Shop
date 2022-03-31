@@ -1,0 +1,109 @@
+<section id="category-details">
+    <div class="card">
+        <div class="card-details text-center">
+            <h3 class="text-center">تفاصيل الطلب رقم {{orderDetailsObj?.id}}</h3> 
+            <table class="table" dir="rtl">
+                <thead style="text-align: right;"><h4>المنتجات</h4></thead><br>
+                <tbody *ngFor="let orderItem of orderDetailsObj?.order_items; let i = index;">
+                    <tr style="text-align: right;">*منتج رقم {{ i + 1 }}</tr>
+                    <tr>
+                        <th scope="row">أسم المنتج</th>
+                        <td><span>{{ orderItem?.shop_product?.name_ar }}</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">سعر المنتج بعد الخصم</th>
+                        <td>{{ orderItem?.shop_product?.price_after_discount }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">كمية المنتج</th>
+                        <td>{{ orderItem?.quantity }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">صورة المنتج</th>
+                        <td><img style="width: 150px;" [src]="orderItem?.shop_product?.imagePath"></td>
+                    </tr>
+                    <tr style="text-align: right;">الأضافات</tr>
+                    <tr *ngFor="let item of orderItem?.order_item_options; let z = index">
+                        <th scope="row">{{z + 1}}- أسم الأضافة {{ item?.order_item_option?.title }}</th>
+                        <td>سعر الأضافة {{ item?.order_item_option?.price_type }}</td>
+                        <!-- <th scope="row"></th> -->
+                        <!-- <td></td> -->
+                    </tr>
+                    <br>
+                </tbody>
+            </table><br>
+            <table class="table" dir="rtl">
+                <thead style="text-align: right;">تفاصيل العميل</thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">اسم العميل</th>
+                        <td>{{ orderDetailsObj?.user?.name }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">رقم الهاتف</th>
+                        <td>{{ orderDetailsObj?.address?.phone }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">أيميل العميل</th>
+                        <td>{{ orderDetailsObj?.user?.email }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">عنوان الطلب</th>
+                        <td>{{ orderDetailsObj?.address?.address_details }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">رقم الشقة</th>
+                        <td>{{ orderDetailsObj?.address?.apartment_number }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">رقم الدور</th>
+                        <td>{{ orderDetailsObj?.address?.floor_number }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">تفاصيل المبني</th>
+                        <td>{{ orderDetailsObj?.address?.building_details }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">نقطة مميزة لعنوان الطلب</th>
+                        <td>{{ orderDetailsObj?.address?.landmark }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">صورة حساب العميل</th>
+                        <td><img style="width: 60px;border-radius: 50%;" 
+                            [src]="orderDetailsObj?.user?.imagePath != null ? orderDetailsObj?.user?.imagePath : '../../../../assets/images/user-one.jpeg' "></td>
+                    </tr>
+                </tbody>
+            </table><br>
+            <table class="table" dir="rtl">
+                <thead style="text-align: right;">تفاصيل الفاتورة</thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">أجمالي السلة</th>
+                        <td>{{ orderDetailsObj?.basket_total }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">سعر التوصيل</th>
+                        <td>{{ orderDetailsObj?.delivery_price }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">نسبة الخصم</th>
+                        <td>{{ orderDetailsObj?.discount }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" style="font-weight: bold;">أجمالي الطلب</th>
+                        <td style="font-weight: bold;">{{ orderDetailsObj?.total_price }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- <button class="btn btn-danger mt-3 mb-3" (click)="closeCard()">حسناً</button> -->
+            <!-- <div class="row">
+                <div class="col-md-3" *ngFor="let image of data.images">
+                    <img class="w-100" src="{{image}}" alt="" >
+                </div>
+            </div> -->
+
+        </div>
+    </div>
+</section>
+
+

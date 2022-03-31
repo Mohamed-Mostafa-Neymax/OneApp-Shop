@@ -1,0 +1,115 @@
+<div class="container-fluid">
+  <div class="row project-cards">
+    <div class="col-md-12 project-list">
+      <div class="card">
+        <div class="row">
+          <div class="col-md-12">
+            <ul class="nav nav-tabs border-tab" id="top-tab" role="tablist">
+              <li class="nav-item"><a (click)="getUsers('admin')" [ngClass]="{'active': type == 'admin'}" class="nav-link" href="javascript:void(0)" role="tab"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-target"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>الجدد</a></li>
+              <li class="nav-item"><a (click)="getUsers('provider')" [ngClass]="{'active': type == 'provider'}" class="nav-link" href="javascript:void(0)" role="tab"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-target"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg> المقبولين </a></li>
+              <li class="nav-item"><a (click)="getUsers('customer')" [ngClass]="{'active': type == 'customer'}" class="nav-link" href="javascript:void(0)" role="tab"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-target"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg> المرفوضين </a></li>
+            </ul>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <div class="card">
+   
+          <div class="card-body">
+            <div class="user-status table-responsive">
+              <table class="table table-bordernone">
+                <thead>
+                  <tr>
+                    <th scope="col"> اسم المستخدم </th>
+                    <th scope="col">الهاتف</th>
+                    <th scope="col"> البريد الالكتروني </th>
+                    <th scope="col"> حالة الحساب   </th>
+                    <th scope="col">الإعدادات</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let user of users.data">
+                     <td>{{user.user_name}}</td>
+                     <td><a dir="ltr" href="tel:{{user.country_code}}{{user.phone_number}}">{{user.country_code}}{{user.phone_number}}</a></td>
+                     <td>{{user.email}}</td>
+                     <td> 
+                       <!-- <div class="badge badge-info">{{user.account_status}}</div> -->
+                      <span class="badge badge-success">نشط</span>
+                       <!-- <select class="form-select" (change)="updateAccountStatus(user.id,$event.target.value)">
+                        <option value="active" [selected]="user.account_status == 'active'">نشط</option>
+                        <option value="disable" [selected]="user.account_status == 'disable'">تعطيل</option>
+                        <option value="pending" [selected]="user.account_status == 'pending'">تعليق</option>
+                        <option value="block" [selected]="user.account_status == 'block'">حظر</option>
+                      </select> -->
+                       </td>
+                     <td>
+                       <a (click)="delete(user.id)" href="javascript:void(0)" class="ml-1 mr-1"><span class="icon ti-trash text-danger"></span></a>
+                      
+                       <a *ngIf="type != 'provider'" [routerLink]="['/app/users/update',user.id]" href="javascript:void(0)" class="ml-1 mr-1"><span class="icon ti-pencil-alt text-primary" title="تعديل"></span></a>
+                      
+                       <a *ngIf="type == 'provider'"  [routerLink]="['/app/users/provider-update',user.id]" href="javascript:void(0)" class="ml-1 mr-1"><span class="icon ti-pencil-alt text-primary" title="تعديل مقدم الخدمه"></span></a>
+                      
+                      
+                      
+                       <a *ngIf="type == 'customer'" (click)="updateAccountType(user.id,'company')"  href="javascript:void(0)" class="ml-1 mr-1"><span class="icon ti-medall text-primary"  title="تحويل الي حساب شركة"></span></a>
+                      <a *ngIf="type == 'company'" (click)="updateAccountType(user.id,'normal')" href="javascript:void(0)" class="ml-1 mr-1"><span class="icon ti-medall-alt text-primary"  title="تحويل الي حساب عادي"></span></a>
+                      <!-- <a (click)="updatePassword(user.id)" href="javascript:void(0)" class="ml-1 mr-1"><span class="icon ti-unlock text-warning" title="تغيير كلمة المرور"></span></a> -->
+                      
+<!--                       
+                      <a *ngIf="user.type == 'provider'" title="الملف الشخصي" [routerLink]="['/app/users/show',user.p_provider.id]" href="javascript:void(0)" class="ml-1 mr-1 btn btn-primary btn-sm"><i class="fas fa-user"></i></a>
+                      <a *ngIf="user.type == 'customer'" title="الملف الشخصي" [routerLink]="['/app/users/show-user',user.id]" href="javascript:void(0)" class="ml-1 mr-1 btn btn-primary btn-sm"><i class="fas fa-user"></i></a>
+                       -->
+                      
+                  </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+
+
+
+
+
+
+
+
+
+            <!-- pagination -->
+  <div class="pagination" *ngIf="users?.total >= perPage">
+      <div class="pagination-container">
+          <div class="pagination-hover-overlay"></div>
+          <a (click)="page = page-1; getUsers(type)" href="javascript:void(0)" class="pagination-prev">
+              <span class="icon-pagination icon-pagination-prev">
+                  <i class="icon material-icons">
+                      keyboard_arrow_right
+                  </i>
+              </span>
+          </a>
+          <a *ngFor="let item of [].constructor(users.last_page);let index = index" [ngClass]="{'active': index+1 == page}" (click)="page = index + 1; getUsers(type)" href="javascript:void(0)" class="pagination-page-number">{{index + 1 }}</a>
+          <a (click)="page = page+1; getUsers(type)" href="javascript:void(0)" class="pagination-next">
+              <span class="icon-pagination icon-pagination-next">
+                  <i class="icon material-icons">
+                      keyboard_arrow_right
+                  </i>
+              </span>
+          </a>
+      </div>
+  </div>
+
+
+
+
+
+
+
+
+
+  
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

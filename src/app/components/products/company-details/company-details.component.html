@@ -1,0 +1,74 @@
+<section id="category-details">
+    <div class="card">
+        <div class="card-details text-center">
+            <h3 class="text-center">بيانات المنتج </h3> 
+            <table class="table" dir="rtl">
+            <tbody>
+                <tr>
+                    <th scope="row">أسم المنتج باللغة العربية</th>
+                    <td>{{data?.name_ar}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">أسم المنتج باللغة الأنجليزية</th>
+                    <td>{{data?.name_en}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">وصف المنتج باللغة العربية</th>
+                    <td>{{data?.description_ar}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">وصف المنتج باللغة الأنجليزية</th>
+                    <td>{{data?.description_en}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">السعر قبل الخصم</th>
+                    <td>{{data?.price}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">السعر بعد الخصم</th>
+                    <td>{{data?.price_after_discount}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">صورة المنتج </th>
+                    <td><img [src]="data?.imagePath" style="width: 150px;height: 150px;"></td>
+                </tr>
+                
+                <!-- <tr>
+                    <th scope="row">اسم المحل</th>
+                    <td>{{data?.shop?.name_ar}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">وصف المحل</th>
+                    <td>{{data?.shop?.description_ar}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">تقييم المحل</th>
+                    <td>
+                        <span *ngFor="let item of [].constructor(data?.shop?.rate)">
+                            <i style="color: gold;" class="fas fa-star"></i>
+                        </span>
+                    </td>
+                </tr> -->
+                    <!-- <tr>
+                        <th scope="row"> الحالة  </th>
+                        <td><span class="badge badge-success">نشط</span></td>
+                        </tr>
+                <tr> -->
+                    <!-- <tr>
+                        <th scope="row">وصف </th>
+                        <td> عندما قامت مطبعة مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص، لتكوّن كتيّب بمثابة دليل أو مرجع شكلي لهذه الأحرف. خمسة قرون من الزمن لم تقضي على هذا النص، بل انه حتى صار مستخدماً وبشكله الأصلي في الطباعة والتنضيد الإلكتروني. انتشر بشكل كبير في ستينيّات هذا القرن مع إ</td>
+                        </tr> -->
+            </tbody>
+            </table>
+            <!-- <button class="btn btn-danger mt-3 mb-3" (click)="closeCard()">حسناً</button> -->
+            <div class="row">
+                <div class="col-md-3" *ngFor="let image of data.images">
+                    <img class="w-100" src="{{image}}" alt="" >
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+

@@ -1,0 +1,236 @@
+<section id="add-main-page">
+    <div class="card">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-body">
+                    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                        <div class="form-group col-12">
+                            <label for="">أقسام المنتج</label>
+                            <ng-multiselect-dropdown [settings]="categoriesSettings" [data]="categoriesList"
+                               [(ngModel)]="selectedCategories" [formControlName]="'shop_product_category_ids'"
+                               (onSelect)="onSelectCategory($event)" (onSelectAll)="onSelectAllCategories($event)">
+                            </ng-multiselect-dropdown>
+                         </div>
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>أسم المنتج باللغة العربية</mat-label>
+                            <input matInput type="text" [formControlName]="'name_ar'">
+                        </mat-form-field>
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>أسم المنتج باللغة الأنجليزية</mat-label>
+                            <input matInput type="text" [formControlName]="'name_en'">
+                        </mat-form-field>
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>وصف المنتج باللغة العربية</mat-label>
+                            <input matInput type="text" [formControlName]="'description_ar'">
+                        </mat-form-field>
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>وصف المنتج باللغة الأنجليزية</mat-label>
+                            <input matInput type="text" [formControlName]="'description_en'">
+                        </mat-form-field>
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>سعر المنتج</mat-label>
+                            <input matInput type="number" min="0" [formControlName]="'price'">
+                        </mat-form-field>
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>نسبة الخصم</mat-label>
+                            <input matInput type="number" min="0" [formControlName]="'discount_percent'">
+                        </mat-form-field>
+                        <div [formArrayName]="'addFile'">
+                            <div class="form-group" *ngFor="let file of signupForm.get('addFile')['controls']; let fileIndex = index;">
+                              <div [formGroupName]="fileIndex">
+                                <div class="row">
+                                  <div class="col-sm-12">
+                                    <h1>ملف رقم {{ fileIndex + 1 }} | 
+                                      <button type="button" class="btn btn-danger" (click)="onDeleteFile(fileIndex)">حذف الملف</button> |
+                                      <button type="button" class="btn btn-success" (click)="onAddFile()">أضافة ملف</button>
+                                      <!-- (click)="onAddFile(fileIndex)" -->
+                                    </h1>
+
+                                    <mat-form-field class="w-100" appearance="outline">
+                                        <mat-label>عنوان الملف</mat-label>
+                                        <input matInput type="text" [formControlName]="'options_title'">
+                                    </mat-form-field>
+                                    <!-- <mat-form-field class="w-100" appearance="outline">
+                                        <mat-label>نوع الملف</mat-label>
+                                        <input matInput type="text" [formControlName]="'options_type'">
+                                    </mat-form-field> -->
+                                    <div class="form-group col-12">
+                                        <label for="">عدد الأختيارات</label>
+                                        <ng-multiselect-dropdown [settings]="options_type_Settings" [data]="options_type_List"
+                                            [formControlName]="'options_type'" (onSelect)="onSelectOption_Type($event)">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                    <!-- <mat-form-field class="w-100" appearance="outline">
+                                        <mat-label>سعر الملف</mat-label>
+                                        <input matInput type="number" min="0" [formControlName]="'options_price_type'">
+                                    </mat-form-field> -->
+                                    <div class="form-group col-12">
+                                        <label for="">نوع التسعير</label>
+                                        <ng-multiselect-dropdown [settings]="options_Price_type_Settings" [data]="options_Price_type_List"
+                                            [formControlName]="'options_price_type'" (onSelect)="onSelectOption_Price_Type($event)">
+                                        </ng-multiselect-dropdown>
+                                     </div>
+
+                                    
+                                    <div [formArrayName]="'options'">
+                                      <div class="form-group" *ngFor="let option of file.get('options')['controls']; let optIndex = index;">
+                                        <div [formGroupName]="optIndex">
+                                          <h1>خيار رقم {{ optIndex + 1 }} | 
+                                            <button type="button" class="btn btn-danger" (click)="onDeleteOption(fileIndex, optIndex)">حذف الخيار</button> |
+                                            <button type="button" class="btn btn-success" (click)="onAddOption(fileIndex, optIndex)">أضافة خيار</button>
+                                            <!-- (click)="onAddFile(fileIndex)" -->
+                                          </h1>
+
+                                        <mat-form-field class="w-100" appearance="outline">
+                                            <mat-label>أسم الأختيار باللغة العربية</mat-label>
+                                            <input matInput type="text" [formControlName]="'options_choice_name_ar'">
+                                        </mat-form-field>
+                                        <mat-form-field class="w-100" appearance="outline">
+                                            <mat-label>أسم الأختيار باللغة الأنجليزية</mat-label>
+                                            <input matInput type="text" [formControlName]="'options_choice_name_en'">
+                                        </mat-form-field>
+                                        <mat-form-field class="w-100" appearance="outline">
+                                            <mat-label>وصف الأختيار باللغة العربية</mat-label>
+                                            <input matInput type="text" [formControlName]="'options_choice_description_ar'">
+                                        </mat-form-field>
+                                        <mat-form-field class="w-100" appearance="outline">
+                                            <mat-label>وصف الأختيار باللغة الأنجليزية</mat-label>
+                                            <input matInput type="text" [formControlName]="'options_choice_description_en'">
+                                        </mat-form-field>
+                                        <mat-form-field class="w-100" appearance="outline">
+                                            <mat-label>سعر الأختيار</mat-label>
+                                            <input matInput type="number" min="0" [formControlName]="'options_choice_price'">
+                                        </mat-form-field>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        <!-- <div class="form-group">
+                            <label for="">اسم المندوب</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">الايميل</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">رقم الجوال</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">البلد</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">المدينة</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">رقم رخصة القيادة</label>
+                            <input type="text" class="form-control">
+                        </div> -->
+                        <div class="form-group">
+                            <label for="">صورة المنتج</label>
+                            <ngx-dropzone (change)="onSelect($event)" accept="image/jpeg,image/jpg,image/png,image/gif" [multiple]="false">
+                                <ngx-dropzone-label>أضغط هنا لإختيار صورة للمنتج</ngx-dropzone-label>
+                                <ngx-dropzone-image-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)" [file]="f" >
+                                    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                                </ngx-dropzone-image-preview>
+                            </ngx-dropzone>
+                        </div>
+                        <!-- <div class="form-group">
+                            <label for="">اسم البنك</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">رقم الحساب البنكي</label>
+                            <input type="text" class="form-control">
+                        </div> -->
+                        
+
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <!--<ng-container formArrayName="digitalArtFiles">
+                                    <ng-container *ngFor="let filesForm of digitalArtFiles.controls; let i = index">
+                                        <h2>
+                                            <i (click)="deleteTime(i,5)" class=" customIcon mt-3 fas fa-times"></i>ملف رقم {{i+1}}</h2>
+                                        <div class="day-form-row row">
+                                            <div class="col-md-11" [formGroup]="filesForm">
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-3">
+                                                        <mat-form-field class="w-100" appearance="outline">
+                                                            <mat-label> الاسم</mat-label>
+                                                            <input [id]="i+1" matInput type="text" formControlName="option_title">
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-md-12 mb-3">
+                                                        <mat-form-field class="w-100" appearance="outline">
+                                                            <mat-label> نوع الاختيار</mat-label>
+                                                            <input [id]="i+1" matInput type="text" formControlName="option_type">
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-md-12 mb-3">
+                                                        <mat-form-field class="w-100" appearance="outline">
+                                                            <mat-label> نوع سعر الاختيار</mat-label>
+                                                            <input [id]="i+1" matInput type="text" formControlName="option_price_type">
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>-->
+
+                                <div class="form-row">
+                                    <!--<div class="col-md-11">
+                                        <ng-container formArrayName="details">
+                                            <ng-container *ngFor="let detailsForm of details.controls; let i = index">
+                                                <div class="d-flex">
+                                                    <div class="col-md-12 p-0" [formGroup]="detailsForm">
+                                                        <div class="col-md-12 mb-3 p-0">
+                                                            <mat-form-field class="w-100" appearance="outline">
+                                                                <span (click)="deleteTime(i,1)" matSuffix><mat-icon style="cursor: pointer;  " *ngIf="i !=0"class="delete-btn text-danger mt-3"
+                                                                    >delete_forever</mat-icon></span>
+                                                                <mat-label> الاوبشنات</mat-label>
+                                                                <input [id]="i+1" matInput type="text" formControlName="name">
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                    </div>-->
+                                    <!-- <div class="col-md-1">
+                                        <button style="height: 51px;" class="btn btn-sm btn-primary w-100 mt-1" >+</button>
+                                        <i  style="cursor: pointer;" 
+                                        (click)="addTime(1)" class="delete-btn  mt-3 fas fa-plus"></i>
+                                    
+                                        <mat-icon style="cursor: pointer;" class="delete-btn  mt-3"
+                                            (click)="addTime(1)">assignment</mat-icon>
+                                    </div> -->
+                                </div>
+                
+                            </div>
+                            <!-- <div class="col-md-12 webkitLeft">
+                                <div class="buttonBlack" (click)="addTime(5)">
+                                    <i  class="fas fa-plus"></i>
+                                    <span>
+                                        اضافة ملف 
+                                    </span>
+                                </div>
+                            </div>-->
+                   
+                        </div>
+                        <div class="form-group text-center mt-5">
+                            <button class="btn btn-primary" type="submit" [disabled]="signupForm.invalid || files.length < 1">إضافة المنتج</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
